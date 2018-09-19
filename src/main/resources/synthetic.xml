@@ -29,13 +29,9 @@
                   description="Bitbucket project to monitor"/>
         <property name="repository" kind="string" category="Repository" required="true"
                   description="Bitbucket repository to monitor"/>
-        <property name="branchName" kind="string" category="Repository" required="false"
-                  description="Optionally Specify branch name if only listening for commits on a single branch"/>
         <property name="triggerOnInitialPublish" category="Options" kind="boolean" default="false" required="false"
                   description="Should suppress error when project or repository not found . Set this to true when project or repository doesn't exist yet and you want to trigger a release on the initial publish. Default value is 'false'"/>
-        <property name="excludeBranches" kind="string" category="Options" default="master"
-                  description="Name of branche(s) to exclude when triggering releases. Comma separated"/>
-                  
+
         <!-- output variables -->
         <property name="commitId" category="variables" required="false" description="Id of the commit."/>
         <property name="branch" category="variables" required="false" description="Branch where the commit occurred."/>
@@ -60,8 +56,7 @@
                   description="Should suppress error when project or repository not found . Set this to true when project or repository doesn't exist yet and you want to trigger a release on the initial publish. Default value is 'false'"/>
 
         <!-- output variables -->
-        <property name="commitId" category="variables" required="false" description="Id of the commit."/>
-        <property name="branch" category="variables" required="false" description="Branch where the commit occurred."/>
+        <property name="pullRequestId" category="variables" required="false" description="Id of the pull request."/>
     </type>
 
     <type type="bitbucket.CommitTrigger" extends="xlrelease.ReleaseTrigger"
@@ -85,6 +80,23 @@
         <property name="branch" category="variables" required="false" description="Branch where the commit occurred."/>
     </type>
 
+    <type type="bitbucket.PullRequestTrigger" extends="xlrelease.ReleaseTrigger"
+          description="Monitors a Stash (Bitbucket On-Premises) repository for new pull requests">
+        <!-- repository -->
+        <property name="server" category="Repository" referenced-type="bitbucket.Server" kind="ci"
+                  description="Bitbucket (on-premises) server to poll"/>
+        <property name="username" category="Repository" default="" required="false"
+                  description="Custom username to override global server configuration"/>
+        <property name="password" category="Repository" default="" required="false" password="true"
+                  description="Custom password to override global server configuration"/>
+        <property name="repo_full_name" category="Repository" required="true" label="Repository Full name"
+                  description="Full name eg. TeamName/Repository, Username/Repository"/>
+        <property name="triggerOnInitialPublish" category="Options" kind="boolean" default="false" required="false"
+                  description="Should suppress error when project or repository not found . Set this to true when project or repository doesn't exist yet and you want to trigger a release on the initial publish. Default value is 'false'"/>
+
+        <!-- output variables -->
+        <property name="pullRequestId" category="variables" required="false" description="Id of the pull request."/>
+    </type>
 
     <!-- Bitbucket Tasks -->
 
